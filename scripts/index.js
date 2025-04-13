@@ -1,8 +1,6 @@
 // список карточек
 const listOfCards = document.querySelector(".places__list");
 
-console.log(listOfCards);
-
 function addCard(cardAdded, deleteCard) {
   // copy content of template cardTemplate
   const cardTemplate = document.querySelector("#card-template").content;
