@@ -1,18 +1,15 @@
-// список карточек
-const listOfCards = document.querySelector(".places__list");
-
-function addCard(cardAdded, deleteCard) {
+function createCard(cardData, deleteCard) {
   // copy content of template cardTemplate
   const cardTemplate = document.querySelector("#card-template").content;
   // make clone of cardTemplate to cardElement
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   // fill textContent of cardElement from array cardInitial
   cardElement.querySelector(".card__image").src =
-    cardAdded.link || "./images/Not_found.jpg";
+    cardData.link || "./images/Not_found.jpg";
   cardElement.querySelector(".card__image").alt =
-    `Пейзаж ${cardAdded.name}` || "Not found";
+    `Пейзаж ${cardData.name}` || "Not found";
   cardElement.querySelector(".card__title").textContent =
-    cardAdded.name || "Not specified";
+    cardData.name || "Not specified";
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
 
@@ -27,4 +24,4 @@ function deleteCard(cardElement) {
   cardElement.remove();
 }
 
-initialCards.forEach((item) => listOfCards.append(addCard(item, deleteCard)));
+export { createCard, deleteCard };
