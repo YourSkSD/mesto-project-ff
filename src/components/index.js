@@ -1,33 +1,12 @@
 import { createCard, deleteCard } from "./card.js";
-import * as modal from "./modal.js";
+import { initialCards } from "./cards.js";
+import {
+  handleCloseEvent,
+  closeModal,
+  openModal,
+  handleEscKeyUp
+} from "./modal.js";
 import "../pages/index.css";
-
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg"
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg"
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg"
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg"
-  }
-];
 
 // список карточек
 const listOfCards = document.querySelector(".places__list");
@@ -36,8 +15,41 @@ initialCards.forEach((item) =>
   listOfCards.append(createCard(item, deleteCard))
 );
 
+// const попапРедактированияПрофия = document.querySelector("...");
 const profileEditButton = document.querySelector(".profile__edit-button");
+const popupEditProfile = document.querySelector(".popup_type_edit");
+
+// const попапДобавленияКарточки = document.querySelector("...");
+const profileAddButton = document.querySelector(".profile__add-button");
+const popupAddProfile = document.querySelector(".popup_type_new-card");
+
+// const попапКартинки = document.querySelector("...");
+const cardsContainer = document.querySelector(".places__list");
+const popupImage = document.querySelector(".popup_type_image");
 
 profileEditButton.addEventListener("click", (evt) => {
-  
+  openModal(popupEditProfile);
+  // функцияЧтобыПовеситьСлушатели(попапРедактированияПрофия);
+  handleCloseEvent(popupEditProfile);
+});
+
+profileAddButton.addEventListener("click", (evt) => {
+  openModal(popupAddProfile);
+  // функцияЧтобыПовеситьСлушатели(попапДобавленияКарточки);
+  handleCloseEvent(popupAddProfile);
+});
+
+cardsContainer.addEventListener("click", (evt) => {
+  if (evt.target.classList.contains("card__image")) {
+    const elemCurrentImage = evt.target;
+    // console.log(`${elemCurrentImage.src} ${elemCurrentImage.alt}`);
+    const elemPopupImage = popupImage.querySelector(".popup__image");
+    // console.log(elemPopupImage);
+    elemPopupImage.src = elemCurrentImage.src;
+    elemPopupImage.alt = elemCurrentImage.alt;
+
+    openModal(popupImage);
+    // функцияЧтобыПовеситьСлушатели(попапКартинки);
+    handleCloseEvent(popupImage);
+  }
 });
