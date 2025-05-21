@@ -21,22 +21,95 @@ const popupEditProfile = document.querySelector(".popup_type_edit");
 
 // const попапДобавленияКарточки = document.querySelector("...");
 const profileAddButton = document.querySelector(".profile__add-button");
-const popupAddProfile = document.querySelector(".popup_type_new-card");
+const popupAddCard = document.querySelector(".popup_type_new-card");
 
 // const попапКартинки = document.querySelector("...");
 const cardsContainer = document.querySelector(".places__list");
 const popupImage = document.querySelector(".popup_type_image");
 
+// данные пользователя
+const userName = document.querySelector(".profile__title");
+const userProfession = document.querySelector(".profile__description");
+
+// формы страницы
+const editProfileForm = document.forms["edit-profile"];
+const newPlaceForm = document.forms["new-place"];
+
+// поля профиля пользователя для записи
+const nameUserFormField = editProfileForm.querySelector("input[name='name']");
+const descriptionFormField = editProfileForm.querySelector(
+  "input[name='description']"
+);
+
+// поля для добавления карточки
+const nameCardFormField = newPlaceForm.querySelector(
+  ".popup__input_type_card-name"
+);
+const linkImageCardFormField = newPlaceForm.querySelector(
+  ".popup__input_type_url"
+);
+
+const handleCardFormSubmit = (evt) => {
+  // сбрасываем стандартную отправку формы с перезагрузкой страницы
+  evt.preventDefault();
+  if (nameCardFormField && linkImageCardFormField) {
+    const cardData = {
+      name: nameCardFormField.textContent,
+      link: linkImageCardFormField.textContent
+    };
+    console.log(cardData);
+    listOfCards.append(createCard(cardData, deleteCard));
+  }
+
+  // сбрасываем поля
+  newPlaceForm.reset();
+  // закрываем форму
+  closeModal(popupAddCard);
+};
+
+const handleProfileFormSubmit = (evt) => {
+  // сбрасываем стандартную отправку формы с перезагрузкой страницы
+  evt.preventDefault();
+
+  // после заполнения полей передаём их на страницу
+  if (nameUserFormField.value) userName.textContent = nameUserFormField.value;
+  if (descriptionFormField.value)
+    userProfession.textContent = descriptionFormField.value;
+
+  // сбрасываем поля
+  editProfileForm.reset();
+  // закрываем форму
+  closeModal(popupEditProfile);
+};
+
 profileEditButton.addEventListener("click", (evt) => {
+  // кнопка формы
+  const popupButton = popupEditProfile.querySelector(".popup__button");
+
+  // заполнение полей значениями со страницы
+  nameUserFormField.value = userName.textContent;
+  descriptionFormField.value = userProfession.textContent;
+
   openModal(popupEditProfile);
+
+  // слушатель на отправку формы через кнопку
+  popupButton.addEventListener("click", handleProfileFormSubmit);
+
   // функцияЧтобыПовеситьСлушатели(попапРедактированияПрофия);
   handleCloseEvent(popupEditProfile);
 });
 
 profileAddButton.addEventListener("click", (evt) => {
-  openModal(popupAddProfile);
+  // кнопка формы
+  const popupButton = popupEditProfile.querySelector(".popup__button");
+
+  openModal(popupAddCard);
+
+  // слушатель на отправку формы через кнопку
+  popupButton.addEventListener("click", handleCardFormSubmit);
+
   // функцияЧтобыПовеситьСлушатели(попапДобавленияКарточки);
-  handleCloseEvent(popupAddProfile);
+  handleCloseEvent(popupAddCard);
 });
 
 cardsContainer.addEventListener("click", (evt) => {
