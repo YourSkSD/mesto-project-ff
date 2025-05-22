@@ -1,4 +1,4 @@
-import { createCard, deleteCard } from "./card.js";
+import { createCard, deleteCard, likeCard } from "./card.js";
 import { initialCards } from "./cards.js";
 import {
   handleCloseEvent,
@@ -12,7 +12,7 @@ import "../pages/index.css";
 const listOfCards = document.querySelector(".places__list");
 
 initialCards.forEach((item) =>
-  listOfCards.append(createCard(item, deleteCard))
+  listOfCards.append(createCard(item, deleteCard, likeCard))
 );
 
 // const попапРедактированияПрофия = document.querySelector("...");
@@ -54,11 +54,10 @@ const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
   if (nameCardFormField && linkImageCardFormField) {
     const cardData = {
-      name: nameCardFormField.textContent,
-      link: linkImageCardFormField.textContent
+      name: nameCardFormField.value,
+      link: linkImageCardFormField.value
     };
-    console.log(cardData);
-    listOfCards.append(createCard(cardData, deleteCard));
+    listOfCards.prepend(createCard(cardData, deleteCard, likeCard));
   }
 
   // сбрасываем поля
@@ -101,7 +100,7 @@ profileEditButton.addEventListener("click", (evt) => {
 
 profileAddButton.addEventListener("click", (evt) => {
   // кнопка формы
-  const popupButton = popupEditProfile.querySelector(".popup__button");
+  const popupButton = popupAddCard.querySelector(".popup__button");
 
   openModal(popupAddCard);
 
@@ -115,11 +114,12 @@ profileAddButton.addEventListener("click", (evt) => {
 cardsContainer.addEventListener("click", (evt) => {
   if (evt.target.classList.contains("card__image")) {
     const elemCurrentImage = evt.target;
-    // console.log(`${elemCurrentImage.src} ${elemCurrentImage.alt}`);
     const elemPopupImage = popupImage.querySelector(".popup__image");
-    // console.log(elemPopupImage);
+    const elemDescription = popupImage.querySelector(".popup__caption");
+
     elemPopupImage.src = elemCurrentImage.src;
     elemPopupImage.alt = elemCurrentImage.alt;
+    elemDescription.textContent = elemCurrentImage.alt;
 
     openModal(popupImage);
     // функцияЧтобыПовеситьСлушатели(попапКартинки);

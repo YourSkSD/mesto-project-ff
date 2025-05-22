@@ -1,4 +1,4 @@
-function createCard(cardData, deleteCard) {
+function createCard(cardData, deleteCard, likeCard) {
   // copy content of template cardTemplate
   const cardTemplate = document.querySelector("#card-template").content;
   // make clone of cardTemplate to cardElement
@@ -12,10 +12,13 @@ function createCard(cardData, deleteCard) {
     cardData.name || "Not specified";
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
+  const likeButton = cardElement.querySelector(".card__like-button");
 
   deleteButton.addEventListener("click", () => {
     deleteCard(cardElement);
   });
+
+  likeButton.addEventListener("click", () => likeCard(likeButton));
 
   return cardElement;
 }
@@ -24,4 +27,8 @@ function deleteCard(cardElement) {
   cardElement.remove();
 }
 
-export { createCard, deleteCard };
+function likeCard(likeButton) {
+  likeButton.classList.toggle("card__like-button_is-active");
+}
+
+export { createCard, deleteCard, likeCard };
