@@ -1,6 +1,7 @@
-function createCard(cardData, deleteCard, likeCard) {
-  // copy content of template cardTemplate
-  const cardTemplate = document.querySelector("#card-template").content;
+// copy content of template cardTemplate
+const cardTemplate = document.querySelector("#card-template").content;
+
+function createCard(cardData, onDeleteCard, onLikeCard, onOpenImagePopup) {
   // make clone of cardTemplate to cardElement
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   // fill textContent of cardElement from array cardInitial
@@ -13,22 +14,25 @@ function createCard(cardData, deleteCard, likeCard) {
 
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const likeButton = cardElement.querySelector(".card__like-button");
+  const imageOfCard = cardElement.querySelector(".card__image");
 
   deleteButton.addEventListener("click", () => {
-    deleteCard(cardElement);
+    onDeleteCard(cardElement);
   });
 
-  likeButton.addEventListener("click", () => likeCard(likeButton));
+  likeButton.addEventListener("click", () => onLikeCard(likeButton));
+
+  imageOfCard.addEventListener("click", () => onOpenImagePopup(cardData));
 
   return cardElement;
 }
 
-function deleteCard(cardElement) {
+function onDeleteCard(cardElement) {
   cardElement.remove();
 }
 
-function likeCard(likeButton) {
+function onLikeCard(likeButton) {
   likeButton.classList.toggle("card__like-button_is-active");
 }
 
-export { createCard, deleteCard, likeCard };
+export { createCard, onDeleteCard, onLikeCard };

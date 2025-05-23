@@ -1,4 +1,8 @@
-import { createCard, deleteCard, likeCard } from "./card.js";
+import {
+  createCard as createCard,
+  onDeleteCard as onDeleteCard,
+  onLikeCard as onLikeCard
+} from "./card.js";
 import { initialCards } from "./cards.js";
 import {
   handleCloseEvent,
@@ -11,8 +15,23 @@ import "../pages/index.css";
 // список карточек
 const listOfCards = document.querySelector(".places__list");
 
+// const попапКартинки = document.querySelector("...");
+const popupImage = document.querySelector(".popup_type_image");
+// элементы формы
+const imageOfPopupImage = popupImage.querySelector(".popup__image");
+const descriptionOfPopupImage = popupImage.querySelector(".popup__caption");
+
+const onOpenImagePopup = (cardData) => {
+  imageOfPopupImage.src = cardData.link;
+  descriptionOfPopupImage.textContent = cardData.name;
+
+  openModal(popupImage);
+};
+
 initialCards.forEach((item) =>
-  listOfCards.append(createCard(item, deleteCard, likeCard))
+  listOfCards.append(
+    createCard(item, onDeleteCard, onLikeCard, onOpenImagePopup)
+  )
 );
 
 // const попапРедактированияПрофия = document.querySelector("...");
@@ -22,10 +41,6 @@ const popupEditProfile = document.querySelector(".popup_type_edit");
 // const попапДобавленияКарточки = document.querySelector("...");
 const profileAddButton = document.querySelector(".profile__add-button");
 const popupAddCard = document.querySelector(".popup_type_new-card");
-
-// const попапКартинки = document.querySelector("...");
-const cardsContainer = document.querySelector(".places__list");
-const popupImage = document.querySelector(".popup_type_image");
 
 // данные пользователя
 const userName = document.querySelector(".profile__title");
@@ -57,7 +72,9 @@ const handleCardFormSubmit = (evt) => {
       name: nameCardFormField.value,
       link: linkImageCardFormField.value
     };
-    listOfCards.prepend(createCard(cardData, deleteCard, likeCard));
+    listOfCards.prepend(
+      createCard(cardData, onDeleteCard, onLikeCard, onOpenImagePopup)
+    );
   }
 
   // сбрасываем поля
@@ -81,48 +98,29 @@ const handleProfileFormSubmit = (evt) => {
   closeModal(popupEditProfile);
 };
 
-profileEditButton.addEventListener("click", (evt) => {
-  // кнопка формы
-  const popupButton = popupEditProfile.querySelector(".popup__button");
+// слушатель на отправку формы
+editProfileForm.addEventListener("submit", handleProfileFormSubmit);
 
+// функцияЧтобыПовеситьСлушатели(попапРедактированияПрофия);
+handleCloseEvent(popupEditProfile);
+
+profileEditButton.addEventListener("click", (evt) => {
   // заполнение полей значениями со страницы
   nameUserFormField.value = userName.textContent;
   descriptionFormField.value = userProfession.textContent;
 
   openModal(popupEditProfile);
-
-  // слушатель на отправку формы через кнопку
-  popupButton.addEventListener("click", handleProfileFormSubmit);
-
-  // функцияЧтобыПовеситьСлушатели(попапРедактированияПрофия);
-  handleCloseEvent(popupEditProfile);
 });
+
+// слушатель на отправку формы
+newPlaceForm.addEventListener("submit", handleCardFormSubmit);
+
+// функцияЧтобыПовеситьСлушатели(попапДобавленияКарточки);
+handleCloseEvent(popupAddCard);
 
 profileAddButton.addEventListener("click", (evt) => {
-  // кнопка формы
-  const popupButton = popupAddCard.querySelector(".popup__button");
-
   openModal(popupAddCard);
-
-  // слушатель на отправку формы через кнопку
-  popupButton.addEventListener("click", handleCardFormSubmit);
-
-  // функцияЧтобыПовеситьСлушатели(попапДобавленияКарточки);
-  handleCloseEvent(popupAddCard);
 });
 
-cardsContainer.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("card__image")) {
-    const elemCurrentImage = evt.target;
-    const elemPopupImage = popupImage.querySelector(".popup__image");
-    const elemDescription = popupImage.querySelector(".popup__caption");
-
-    elemPopupImage.src = elemCurrentImage.src;
-    elemPopupImage.alt = elemCurrentImage.alt;
-    elemDescription.textContent = elemCurrentImage.alt;
-
-    openModal(popupImage);
-    // функцияЧтобыПовеситьСлушатели(попапКартинки);
-    handleCloseEvent(popupImage);
-  }
-});
+// функцияЧтобыПовеситьСлушатели(попапКартинки);
+handleCloseEvent(popupImage);
