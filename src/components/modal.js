@@ -6,18 +6,6 @@ export const handleEscKeyUp = (evt) => {
   }
 };
 
-export const clearValidation = (elementPopup) => {
-  const inputList = Array.from(elementPopup.querySelectorAll(".popup__input"));
-  inputList.forEach((inputElement) => {
-    const errorElement = elementPopup.querySelector(
-      `#${inputElement.id}-error`
-    );
-    inputElement.classList.remove("popup__input_type_error");
-    errorElement.classList.remove("popup__input-error_active");
-    errorElement.textContent = "";
-  });
-};
-
 export const openModal = (modal) => {
   // добавить класс открытия попапа
   modal.classList.add("popup_is-opened", "popup_is-animated");
@@ -36,14 +24,12 @@ export const handleCloseEvent = (elementPopup) => {
   // ищем кнопку крестик в попапе
   const closeButton = elementPopup.querySelector(".popup__close");
   closeButton.addEventListener("click", (evt) => {
-    clearValidation(elementPopup);
     closeModal(elementPopup);
   });
 
   elementPopup.addEventListener("mousedown", (evt) => {
     // если event.target содержит класс "popup", то закрываем
     if (evt.target.classList.contains("popup_is-opened")) {
-      clearValidation(elementPopup);
       closeModal(elementPopup);
     }
   });

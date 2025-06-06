@@ -17,9 +17,19 @@ import {
   hasInvalidInput,
   checkInputValidity,
   hideInputError,
-  showInputError
-} from "./input-error.js";
+  showInputError,
+  clearValidation
+} from "./validation.js";
 import "../pages/index.css";
+
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible"
+};
 
 // список карточек
 const listOfCards = document.querySelector(".places__list");
@@ -74,7 +84,7 @@ const linkImageCardFormField = newPlaceForm.querySelector(
 );
 
 //включаем валидацию полей форм
-enableValidation();
+enableValidation(validationConfig);
 
 const handleCardFormSubmit = (evt) => {
   // сбрасываем стандартную отправку формы с перезагрузкой страницы
@@ -120,7 +130,7 @@ profileEditButton.addEventListener("click", (evt) => {
   // заполнение полей значениями со страницы
   nameUserFormField.value = userName.textContent;
   descriptionFormField.value = userProfession.textContent;
-
+  clearValidation(popupEditProfile, validationConfig);
   openModal(popupEditProfile);
 });
 
@@ -131,6 +141,7 @@ newPlaceForm.addEventListener("submit", handleCardFormSubmit);
 handleCloseEvent(popupAddCard);
 
 profileAddButton.addEventListener("click", (evt) => {
+  clearValidation(popupAddCard, validationConfig);
   openModal(popupAddCard);
 });
 
