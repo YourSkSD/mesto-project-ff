@@ -10,6 +10,15 @@ import {
   openModal,
   handleEscKeyUp
 } from "./modal.js";
+import {
+  enableValidation,
+  setEventListeners,
+  toggleButtonState,
+  hasInvalidInput,
+  checkInputValidity,
+  hideInputError,
+  showInputError
+} from "./input-error.js";
 import "../pages/index.css";
 
 // список карточек
@@ -63,6 +72,9 @@ const nameCardFormField = newPlaceForm.querySelector(
 const linkImageCardFormField = newPlaceForm.querySelector(
   ".popup__input_type_url"
 );
+
+//включаем валидацию полей форм
+enableValidation();
 
 const handleCardFormSubmit = (evt) => {
   // сбрасываем стандартную отправку формы с перезагрузкой страницы

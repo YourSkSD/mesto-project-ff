@@ -19,6 +19,17 @@
   cursor: pointer;
 }
 
+/* .popup__button_inactive {
+  color: #b8b8b8;
+  background: transparent;
+  border: 1px solid #b8b8b8;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+} */
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;

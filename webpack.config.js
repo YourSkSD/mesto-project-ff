@@ -16,6 +16,11 @@ module.exports = {
   devServer: {
     static: path.resolve(__dirname, "./dist"),
     open: true,
+    open: {
+      app: {
+        name: "Google Chrome"
+      }
+    },
     compress: true,
     port: 8080
   },
