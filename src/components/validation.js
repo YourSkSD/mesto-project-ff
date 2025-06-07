@@ -2,14 +2,15 @@ const clearValidation = (elementPopup, validationConfig) => {
   const inputList = Array.from(
     elementPopup.querySelectorAll(validationConfig.inputSelector)
   );
+  const buttonElement = elementPopup.querySelector(
+    validationConfig.submitButtonSelector
+  );
+
   inputList.forEach((inputElement) => {
-    const errorElement = elementPopup.querySelector(
-      `#${inputElement.id}-error`
-    );
-    inputElement.classList.remove(validationConfig.inputErrorClass);
-    errorElement.classList.remove(validationConfig.errorClass);
-    errorElement.textContent = "";
+    hideInputError(elementPopup, inputElement, validationConfig);
   });
+
+  toggleButtonState(inputList, buttonElement, validationConfig);
 };
 
 const showInputError = (
@@ -33,9 +34,6 @@ const hideInputError = (formElement, inputElement, validationConfig) => {
 
 const checkInputValidity = (formElement, inputElement, validationConfig) => {
   if (inputElement.validity.patternMismatch) {
-    // данные атрибута доступны у элемента инпута через ключевое слово dataset.
-    // обратите внимание, что в js имя атрибута пишется в camelCase (да-да, в
-    // HTML мы писали в kebab-case, это не опечатка)
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
     inputElement.setCustomValidity("");
@@ -62,8 +60,10 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement, validationConfig) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(validationConfig.inactiveButtonClass);
+    buttonElement.disabled = true;
   } else {
     buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 };
 

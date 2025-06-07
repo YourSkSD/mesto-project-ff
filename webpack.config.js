@@ -21,6 +21,8 @@ module.exports = {
         name: "Google Chrome"
       }
     },
+    host: "localhost",
+    watchFiles: ["*.html"],
     compress: true,
     port: 8080
   },

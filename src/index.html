@@ -101,7 +101,7 @@
               type="text"
               id="new-place-name-input"
               name="place-name"
-              class="popup__input"
+              class="popup__input popup__input_type_card-name"
               placeholder="Название"
               minlength="2"
               maxlength="30"
@@ -122,10 +122,10 @@
               type="url"
               id="new-place-image-link-input"
               name="image-link"
-              class="popup__input"
+              class="popup__input popup__input_type_url"
               placeholder="Ссылка на картинку"
-              pattern="^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$"
               data-error-message="Введите корректный URL адрес."
+              pattern="^https?:\/\/.*$"
               aria-describedby="image-link-error"
               novalidity
               required

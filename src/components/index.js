@@ -20,6 +20,12 @@ import {
   showInputError,
   clearValidation
 } from "./validation.js";
+// import {
+//   getUserInfo, getInitialCards,
+//   updateUserProfile, updateUserImage,
+//   addNewCardToServer, deleteCardFromServer,
+//   removeCardLike, addCardLike
+// } from './components/api.js'
 import "../pages/index.css";
 
 const validationConfig = {
@@ -130,8 +136,8 @@ profileEditButton.addEventListener("click", (evt) => {
   // заполнение полей значениями со страницы
   nameUserFormField.value = userName.textContent;
   descriptionFormField.value = userProfession.textContent;
-  clearValidation(popupEditProfile, validationConfig);
   openModal(popupEditProfile);
+  clearValidation(popupEditProfile, validationConfig);
 });
 
 // слушатель на отправку формы
@@ -141,8 +147,8 @@ newPlaceForm.addEventListener("submit", handleCardFormSubmit);
 handleCloseEvent(popupAddCard);
 
 profileAddButton.addEventListener("click", (evt) => {
-  clearValidation(popupAddCard, validationConfig);
   openModal(popupAddCard);
+  clearValidation(popupAddCard, validationConfig);
 });
 
 // функцияЧтобыПовеситьСлушатели(попапКартинки);
