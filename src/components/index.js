@@ -79,6 +79,10 @@ const descriptionFormField = editProfileForm.querySelector(
   "input[name='description']"
 );
 
+const cardNameForm = popupAddCard.querySelector("input[name='place-name']");
+const cardLinkForm = popupAddCard.querySelector("input[name='image-link']");
+const saveButton = popupAddCard.querySelector(".popup__button");
+
 // поля для добавления карточки
 const nameCardFormField = newPlaceForm.querySelector(
   ".popup__input_type_card-name"
@@ -132,6 +136,8 @@ initialPage();
 
 const onOpenImagePopup = (cardData) => {
   imageOfPopupImage.src = cardData.link;
+  imageOfPopupImage.alt = cardData.name;
+
   descriptionOfPopupImage.textContent = cardData.name;
 
   openModal(popupImage);
@@ -200,9 +206,6 @@ const handleProfileFormSubmit = (evt) => {
     about: descriptionFormField.value
   };
 
-  userName.textContent = nameUserFormField.value;
-  userProfession.textContent = descriptionFormField.value;
-
   const saveButton = editProfileForm.querySelector(".popup__button");
 
   setLoadingState(saveButton, true, "Сохранение...");
@@ -219,7 +222,7 @@ const handleProfileFormSubmit = (evt) => {
     .finally(() => {
       setLoadingState(saveButton, false);
     });
-  closeModal(popupEditProfile);
+  // closeModal(popupEditProfile);
 };
 
 profileOverlay.addEventListener("click", () => {
@@ -243,9 +246,6 @@ profileEditButton.addEventListener("click", (evt) => {
 //Создаем новую карточку
 function addNewCard(evt, onOpenImagePopup) {
   evt.preventDefault();
-  const cardNameForm = popupAddCard.querySelector("input[name='place-name']");
-  const cardLinkForm = popupAddCard.querySelector("input[name='image-link']");
-  const saveButton = popupAddCard.querySelector(".popup__button");
 
   //Новая карточка
   const newCardData = {
@@ -266,6 +266,7 @@ function addNewCard(evt, onOpenImagePopup) {
       );
 
       listOfCards.prepend(newCard);
+      closeModal(popupAddCard);
     })
     .catch((err) => {
       console.error("Ошибка при добавлении карточки:", err);
@@ -279,7 +280,6 @@ function addNewCard(evt, onOpenImagePopup) {
 // newPlaceForm.addEventListener("submit", handleCardFormSubmit);
 newPlaceForm.addEventListener("submit", (evt) => {
   addNewCard(evt, onOpenImagePopup);
-  closeModal(popupAddCard);
   newPlaceForm.reset();
   clearValidation(popupAddCard, validationConfig);
 });
@@ -296,8 +296,6 @@ editAvatarForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
 
   const url = editAvatarForm["link"].value;
-  userAvatar.src = url;
-  editAvatarForm.reset();
   clearValidation(popupNewAvatar, validationConfig);
 
   const saveButton = editAvatarForm.querySelector(".popup__button");
@@ -307,6 +305,7 @@ editAvatarForm.addEventListener("submit", (evt) => {
     .then((url) => {
       userAvatar.src = url.avatar;
       closeModal(popupNewAvatar);
+      editAvatarForm.reset();
     })
     .catch((err) => {
       console.log("Ошибка при обновлении изображения:", err);
@@ -314,7 +313,6 @@ editAvatarForm.addEventListener("submit", (evt) => {
     .finally(() => {
       setLoadingState(saveButton, false);
     });
-  closeModal(popupNewAvatar);
 });
 
 // функцияЧтобыПовеситьСлушатели(попапДобавленияКарточки);
