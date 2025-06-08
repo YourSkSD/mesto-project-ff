@@ -53,12 +53,13 @@ function isLikedCard(cardElement) {
 //   likeButton.classList.contains("card__like-button_is-active");
 // }
 
-function updatedCardLike(card, likes) {
+const updatedCardLike = (card, likes) => {
   const likeButton = card.querySelector(".card__like-button");
   const likeCounter = card.querySelector(".card__like-counter");
 
-  likeButton.classList.toggle(".card__like-button_is-active");
+  likeButton.classList.toggle("card__like-button_is-active");
+
   likeCounter.textContent = likes.length;
-}
+};
 
 export { createCard, isLikedCard, updatedCardLike };

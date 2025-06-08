@@ -172,7 +172,6 @@ function onLikeCard(cardId, cardElement) {
       updatedCardLike(cardElement, card.likes);
     })
     .catch((err) => {
-      alert(`${err}`);
       console.log("Ошибка при лайке карточки:", err);
     });
 }
