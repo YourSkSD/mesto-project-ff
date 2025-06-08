@@ -3,7 +3,7 @@ const cardTemplate = document.querySelector("#card-template").content;
 
 function createCard(
   cardData,
-  handleDeleteClick,
+  onDeleteCard,
   onLikeCard,
   onOpenImagePopup,
   userId
@@ -26,8 +26,8 @@ function createCard(
     deleteButton.classList.add("card__delete-button_hidden");
   } else {
     deleteButton.addEventListener("click", () => {
-      if (handleDeleteClick) {
-        handleDeleteClick(cardData._id, cardElement);
+      if (onDeleteCard) {
+        onDeleteCard(cardData._id, cardElement);
       }
     });
   }
@@ -62,4 +62,11 @@ const updatedCardLike = (card, likes) => {
   likeCounter.textContent = likes.length;
 };
 
-export { createCard, isLikedCard, updatedCardLike };
+//Удаление карточки
+function removeCard(element) {
+  if (element && element.remove) {
+    element.remove();
+  }
+}
+
+export { createCard, isLikedCard, updatedCardLike, removeCard };

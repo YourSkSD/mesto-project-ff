@@ -1,7 +1,8 @@
 import {
   createCard as createCard,
   isLikedCard as isLikedCard,
-  updatedCardLike as updatedCardLike
+  updatedCardLike as updatedCardLike,
+  removeCard as removeCard
 } from "./card.js";
 // import { initialCards } from "./cards.js";
 import {
@@ -120,7 +121,7 @@ function renderCards(initialCards) {
       listOfCards.append(
         createCard(
           card,
-          handleDeleteClick,
+          onDeleteCard,
           onLikeCard,
           onOpenImagePopup,
           currentUserId
@@ -259,7 +260,7 @@ function addNewCard(evt, onOpenImagePopup) {
     .then((cardFromServer) => {
       const newCard = createCard(
         cardFromServer,
-        handleDeleteClick,
+        onDeleteCard,
         onLikeCard,
         onOpenImagePopup,
         currentUserId
@@ -344,20 +345,32 @@ function setLoadingState(button, isLoading, loadingText = "Сохранение.
 enableValidation(validationConfig);
 
 //Удаляем карточку
-let cardIdToDelete = null;
-let cardElementToDelete = null;
+// let cardIdToDelete = null;
+// let cardElementToDelete = null;
 
-function handleDeleteClick(cardId, cardElement) {
-  cardIdToDelete = cardId;
-  cardElementToDelete = cardElement;
-  onDeleteCard(cardIdToDelete, cardElementToDelete);
-}
+// function handleDeleteClick(cardId, cardElement) {
+//   cardIdToDelete = cardId;
+//   cardElementToDelete = cardElement;
+//   onDeleteCard(cardIdToDelete, cardElementToDelete);
+// }
+
+// function onDeleteCard(cardIdToDelete, cardElementToDelete) {
+//   if (cardIdToDelete && cardElementToDelete) {
+//     deleteCardFromServer(cardIdToDelete)
+//       .then(() => {
+//         cardElementToDelete.remove();
+//       })
+//       .catch((err) => {
+//         console.error("Ошибка при удалении карточки:", err);
+//       });
+//   }
+// }
 
 function onDeleteCard(cardIdToDelete, cardElementToDelete) {
   if (cardIdToDelete && cardElementToDelete) {
     deleteCardFromServer(cardIdToDelete)
       .then(() => {
-        cardElementToDelete.remove();
+        removeCard(cardElementToDelete);
       })
       .catch((err) => {
         console.error("Ошибка при удалении карточки:", err);
