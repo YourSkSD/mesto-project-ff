@@ -1,7 +1,7 @@
 const config = {
   baseUrl: "https://nomoreparties.co/v1/wff-cohort-39",
   headers: {
-    authorication: "9fb1e8c4-834a-43a5-a89c-3a8ad4f3017d",
+    authorization: "9fb1e8c4-834a-43a5-a89c-3a8ad4f3017d",
     "Content-Type": "application/json"
   }
 };
@@ -19,7 +19,7 @@ export const getInitialCards = () => {
     headers: config.headers
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };
@@ -29,7 +29,7 @@ export const getUserData = () => {
     headers: config.headers
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };

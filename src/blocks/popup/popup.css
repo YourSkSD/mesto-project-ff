@@ -10,6 +10,7 @@
 @import url("./__caption/popup__caption.css");
 @import url("./__new-image/popup_new-image.css");
 @import url("./__image/popup__image.css");
+@import url("./utils/popup-error.css");
 
 .popup {
   font-family: "Inter", Arial, sans-serif;
