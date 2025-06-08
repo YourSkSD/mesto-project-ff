@@ -45,7 +45,6 @@ const validationConfig = {
 let currentUserId = null;
 // список карточек
 const listOfCards = document.querySelector(".places__list");
-
 // const попапКартинки = document.querySelector("...");
 const popupImage = document.querySelector(".popup_type_image");
 // элементы формы
@@ -114,7 +113,7 @@ function renderCards(initialCards) {
   // Проверяем тип данных карточек
   if (Array.isArray(initialCards)) {
     initialCards.forEach((card) => {
-      listOfCards.appendChild(
+      listOfCards.append(
         createCard(
           card,
           handleDeleteClick,
