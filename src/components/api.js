@@ -44,7 +44,7 @@ export const updateUserProfile = (userData) => {
     })
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };
@@ -58,7 +58,7 @@ export const updateUserAvatar = (url) => {
     })
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };
@@ -73,7 +73,7 @@ export const addCardToServer = (cardData) => {
     })
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };
@@ -84,7 +84,7 @@ export const deleteCardFromServer = (cardId) => {
     headers: config.headers
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };
@@ -95,7 +95,7 @@ export const addCardLike = (cardId) => {
     headers: config.headers
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };
@@ -106,7 +106,7 @@ export const deleteCardLike = (cardId) => {
     headers: config.headers
   })
     .then((res) => {
-      getResponseData(res);
+      return getResponseData(res);
     })
     .catch((err) => console.log(err));
 };

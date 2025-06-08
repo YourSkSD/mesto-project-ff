@@ -1,7 +1,7 @@
 import {
   createCard as createCard,
   isLikedCard as isLikedCard,
-  updateCardLike as updateCardLike
+  updatedCardLike as updatedCardLike
 } from "./card.js";
 // import { initialCards } from "./cards.js";
 import {
@@ -103,13 +103,10 @@ async function initialPage() {
 
     //Генерация карточек
     renderCards(initialCards);
-    alert(Array.toArray(initialCards));
   } catch (err) {
     console.log(`Ошибка: ${err}`);
   }
 }
-
-initialPage();
 
 function renderCards(initialCards) {
   listOfCards.innerHTML = "";
@@ -128,9 +125,11 @@ function renderCards(initialCards) {
       );
     });
   } else {
-    console.error("Ожидался массив карточек, получено:", initialCards);
+    console.log("Ожидался массив карточек, получено:", initialCards);
   }
 }
+
+initialPage();
 
 const onOpenImagePopup = (cardData) => {
   imageOfPopupImage.src = cardData.link;
@@ -170,9 +169,10 @@ function onLikeCard(cardId, cardElement) {
 
   toggleLikeCard(cardId)
     .then((card) => {
-      updateCardLike(cardElement, card.likes);
+      updatedCardLike(cardElement, card.likes);
     })
     .catch((err) => {
+      alert(`${err}`);
       console.log("Ошибка при лайке карточки:", err);
     });
 }
